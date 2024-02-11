@@ -4,7 +4,52 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-def ExactDrugAlgoFunction(drug_code, data):
+def ExactDrugAlgoFunction(drug_code, data, expected_generic_name=None):
+
+    #Helper function for unit test
+    def get_generic_name_by_item_number(item_number, dataframe):
+        # Replace 'item_number_column' and 'generic_name_column' with actual column names from your CSV
+        result = dataframe[dataframe['Item Number – 8 digit'] == item_number]
+        if not result.empty:
+            return result['Generic Name'].iloc[0]
+        else:
+            return None
+
+    actual_generic_name = get_generic_name_by_item_number(drug_code, data)
+    if expected_generic_name != None:
+        if expected_generic_name not in data['Generic Name'].values:
+            raise Exception(f"Invalid generic name, '{expected_generic_name}' does not exist in Daily Snapshot.csv")
+    
+        if actual_generic_name != expected_generic_name:
+            raise Exception(f"Test failed for item number {drug_code}: expected '{expected_generic_name}', got '{actual_generic_name}'")
+
+    if len(str(drug_code)) != 8:
+        raise ValueError("Drug code must be exactly 8 digits long.")
+    
+    if drug_code not in data['Item Number – 8 digit'].values:
+        raise Exception(f"Invalid item number, '{drug_code}' does not exist in Daily Snapshot.csv")
+    
+    for item in data['Size Qty']:
+        if isinstance(item, int):
+            raise Exception(f"String value found in 'Size Qty'")
+    
+    for item in data['Item Number – 8 digit']:
+        item_str = str(item)
+        if not isinstance(item, int):
+            raise Exception(f"String value found in 'Item Number – 8 digit'")
+        if len(item_str) != 8:
+            raise Exception(f"Found an item with incorrect length: {item}")
+        
+    for item in data['Generic Name']:
+        if not isinstance(item, str):
+            raise Exception(f"Non-string value found in 'Generic Name'")
+
+    for index, row in data.iterrows():
+        form_value = row['Form']
+        word_count = len(form_value.split())
+        if word_count > 7:
+            raise Exception(f"Entry in 'Form' column exceeds 7 words at index {index}: '{form_value}'")
+
     # Item number of the drug to run the similarity test on
     reference_item_number = drug_code
 
