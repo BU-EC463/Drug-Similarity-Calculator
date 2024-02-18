@@ -4,8 +4,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-def ExactDrugAlgoFunction(drug_code, data, expected_generic_name=None):
-
+def ExactDrugAlgoFunction(drug_code, data):
+    '''
     #Helper function for unit test
     def get_generic_name_by_item_number(item_number, dataframe):
         # Replace 'item_number_column' and 'generic_name_column' with actual column names from your CSV
@@ -14,7 +14,7 @@ def ExactDrugAlgoFunction(drug_code, data, expected_generic_name=None):
             return result['Generic Name'].iloc[0]
         else:
             return None
-
+        
     actual_generic_name = get_generic_name_by_item_number(drug_code, data)
     if expected_generic_name != None:
         if expected_generic_name not in data['Generic Name'].values:
@@ -22,7 +22,7 @@ def ExactDrugAlgoFunction(drug_code, data, expected_generic_name=None):
     
         if actual_generic_name != expected_generic_name:
             raise Exception(f"Test failed for item number {drug_code}: expected '{expected_generic_name}', got '{actual_generic_name}'")
-
+    '''
     if len(str(drug_code)) != 8:
         raise ValueError("Drug code must be exactly 8 digits long.")
     

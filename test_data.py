@@ -38,26 +38,50 @@ def test_item_number_to_generic_name_31313131(item_number=31313131, dataframe=in
 
 def test_item_number_to_generic_name_10055750(item_number=10055750, expected_generic_name='paroxetine', dataframe=inputData):
     try:
-        ExactDrugAlgoFunction(item_number, dataframe, expected_generic_name)
+        result = ExactDrugAlgoFunction(item_number, dataframe)
+        actual_generic_name = get_generic_name_by_item_number(item_number, dataframe)
+        if expected_generic_name not in result['Generic Name'].values:
+            raise Exception(f"Invalid generic name, '{expected_generic_name}' does not exist in Daily Snapshot.csv")
+    
+        if actual_generic_name != expected_generic_name:
+            raise Exception(f"Test failed for item number {item_number}: expected '{expected_generic_name}', got '{actual_generic_name}'")
     except Exception as e:
         assert str(e)
 
 def test_item_number_to_generic_name_10083420(item_number=10083420, expected_generic_name='duloxetine', dataframe=inputData):
     try:
-        ExactDrugAlgoFunction(item_number, dataframe, expected_generic_name)
+        result = ExactDrugAlgoFunction(item_number, dataframe)
+        actual_generic_name = get_generic_name_by_item_number(item_number, dataframe)
+        if expected_generic_name not in result['Generic Name'].values:
+            raise Exception(f"Invalid generic name, '{expected_generic_name}' does not exist in Daily Snapshot.csv")
+    
+        if actual_generic_name != expected_generic_name:
+            raise Exception(f"Test failed for item number {item_number}: expected '{expected_generic_name}', got '{actual_generic_name}'")
     except Exception as e:
         assert str(e)
 
 def test_item_number_to_generic_name_10000096(item_number=10000096, expected_generic_name='lancets', dataframe=inputData):
     try:
-        ExactDrugAlgoFunction(item_number, dataframe, expected_generic_name)
+        result = ExactDrugAlgoFunction(item_number, dataframe)
+        actual_generic_name = get_generic_name_by_item_number(item_number, dataframe)
+        if expected_generic_name not in result['Generic Name'].values:
+            raise Exception(f"Invalid generic name, '{expected_generic_name}' does not exist in Daily Snapshot.csv")
+    
+        if actual_generic_name != expected_generic_name:
+            raise Exception(f"Test failed for item number {item_number}: expected '{expected_generic_name}', got '{actual_generic_name}'")
     except Exception as e:
         assert str(e)
 
 
 def test_item_number_to_generic_name_10000096_v2(item_number=10000096, expected_generic_name='propane', dataframe=inputData):
     try:
-        ExactDrugAlgoFunction(item_number, dataframe, expected_generic_name)
+        result = ExactDrugAlgoFunction(item_number, dataframe)
+        actual_generic_name = get_generic_name_by_item_number(item_number, dataframe)
+        if expected_generic_name not in result['Generic Name'].values:
+            raise Exception(f"Invalid generic name, '{expected_generic_name}' does not exist in Daily Snapshot.csv")
+    
+        if actual_generic_name != expected_generic_name:
+            raise Exception(f"Test failed for item number {item_number}: expected '{expected_generic_name}', got '{actual_generic_name}'")
     except Exception as e:
         assert str(e)
 
